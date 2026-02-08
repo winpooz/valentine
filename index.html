@@ -1,62 +1,108 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Be My Valentine?</title>
-  <style>
-    body {
-      background: pink;
-      text-align: center;
-      font-family: Arial, sans-serif;
-      padding-top: 100px;
-      overflow: hidden;
-    }
+<title>Valentine Quest</title>
+<style>
+body {
+  background: #87ceeb;
+  font-family: monospace;
+  text-align: center;
+  padding-top: 30px;
+}
 
-    h1 {
-      font-size: 50px;
-      color: red;
-    }
+#game {
+  width: 600px;
+  height: 300px;
+  margin: auto;
+  border: 8px solid black;
+  background: repeating-linear-gradient(
+    #7cfc00 0px,
+    #7cfc00 30px,
+    #228B22 30px,
+    #228B22 60px
+  );
+  position: relative;
+}
 
-    button {
-      font-size: 25px;
-      padding: 15px 30px;
-      margin: 20px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-    }
+.player {
+  width: 40px;
+  height: 40px;
+  background: brown;
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  border: 3px solid black;
+}
 
-    #yes {
-      background: red;
-      color: white;
-    }
+.textbox {
+  font-size: 20px;
+  background: white;
+  padding: 10px;
+  border: 3px solid black;
+  width: 600px;
+  margin: 10px auto;
+}
 
-    #no {
-      background: white;
-      color: red;
-      position: absolute;
-    }
-  </style>
+button {
+  font-size: 18px;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+}
+</style>
 </head>
+
 <body>
 
-  <h1>Will you be my Valentine? ❤️</h1>
+<h1>💖 Valentine Quest (Minecraft Edition)</h1>
 
-  <button id="yes" onclick="yesClick()">YES 💕</button>
-  <button id="no" onmouseover="moveNo()">NO 😢</button>
+<div id="game">
+  <div id="player" class="player"></div>
+</div>
 
-  <script>
-    function yesClick() {
-      document.body.innerHTML = "<h1>She said YES!!! 💖💖💖</h1>";
-    }
+<div id="dialogue" class="textbox">
+  Use the buttons to walk to the end of the world ❤️
+</div>
 
-    function moveNo() {
-      const btn = document.getElementById("no");
-      const x = Math.random() * (window.innerWidth - 150);
-      const y = Math.random() * (window.innerHeight - 150);
-      btn.style.left = x + "px";
-      btn.style.top = y + "px";
-    }
-  </script>
+<div>
+  <button onclick="moveRight()">➡️ Walk</button>
+</div>
+
+<script>
+let pos = 10;
+let step = 0;
+
+const messages = [
+  "You spawned in a strange world...",
+  "You found a village. They said someone loves you ❤️",
+  "You traveled through forests and mountains...",
+  "You found a chest. Inside is a heart 💕",
+  "You reached the final portal...",
+  "Will you be my Valentine? 💘"
+];
+
+function moveRight() {
+  pos += 50;
+  document.getElementById("player").style.left = pos + "px";
+  step++;
+  
+  if (step < messages.length) {
+    document.getElementById("dialogue").innerText = messages[step];
+  }
+
+  if (step === messages.length - 1) {
+    showButtons();
+  }
+}
+
+function showButtons() {
+  document.body.innerHTML += `
+  <div style="font-size:30px;">
+    <button onclick="alert('YAYYYY ❤️❤️❤️')">YES 💕</button>
+    <button onmouseover="this.style.position='absolute';this.style.left=Math.random()*80+'vw';this.style.top=Math.random()*80+'vh';">NO 😈</button>
+  </div>`;
+}
+</script>
 
 </body>
 </html>
